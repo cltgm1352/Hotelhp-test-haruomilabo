@@ -8,20 +8,18 @@
   <!-- ✅ ファビコン -->
   <link rel="icon" href="ryokantatibanasitelogo.png" type="image/png" />
 
+  <!-- ✅ 筆文字風フォント（Kaisei Tokumin） -->
+  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&display=swap" rel="stylesheet">
+
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background: #111;
-      height: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #F3F0EC;
+      font-family: 'Kaisei Tokumin', serif;
+      color: #333;
     }
 
-    /* ✅ ヘッダー背景色変更 */
     header {
       height: 60px;
       background-color: #F3F0EC;
@@ -33,7 +31,6 @@
       left: 0;
       right: 0;
       z-index: 20;
-      user-select: none;
     }
 
     header img {
@@ -42,19 +39,11 @@
     }
 
     main {
-      flex: 1;
+      padding-top: 80px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding-top: 60px;
-    }
-
-    @media (max-width: 768px) and (orientation: portrait) {
-      main {
-        align-items: flex-start;
-        padding-top: 60px;
-      }
+      align-items: center;
+      flex-direction: column;
     }
 
     .video-wrapper {
@@ -62,14 +51,16 @@
       width: 95vw;
       max-width: 1400px;
       aspect-ratio: 16 / 9;
-      margin-top: 0;
+      background-color: #000;
+      border-radius: 12px;
+      overflow: hidden;
     }
 
     video {
       width: 100%;
       height: 100%;
-      border-radius: 12px;
       display: none;
+      object-fit: cover;
     }
 
     video.active {
@@ -96,7 +87,6 @@
       align-items: center;
       border-radius: 50%;
       background: conic-gradient(#555 0deg, #555 360deg);
-      transition: none;
     }
 
     .inner-circle {
@@ -116,36 +106,60 @@
       object-fit: cover;
       display: block;
       pointer-events: none;
-      user-select: none;
     }
 
+    /* ✅ 予約ボタン（映像内、下中央） */
     .reserve-button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      background-color: #e53935;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 24px;
+      background-color: #b7282e;
+      color: #fff;
+      font-size: 1.2rem;
       border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 1.1rem;
+      border-radius: 6px;
+      font-family: 'Kaisei Tokumin', serif;
       cursor: pointer;
-      transition: background-color 0.3s ease;
       text-decoration: none;
+      z-index: 15;
+      transition: background-color 0.3s ease;
     }
 
     .reserve-button:hover {
-      background-color: #c62828;
+      background-color: #a30000;
+    }
+
+    @media (max-width: 768px) {
+      .circle {
+        width: 60px;
+        height: 60px;
+      }
+
+      .inner-circle {
+        width: 50px;
+        height: 50px;
+      }
+
+      .reserve-button {
+        font-size: 1rem;
+        padding: 8px 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ✅ ヘッダーにロゴ画像 -->
+  <!-- ✅ ヘッダー -->
   <header>
     <img src="ryokantatibanakarilogo.png" alt="旅館 橘ロゴ" />
   </header>
 
+  <!-- ✅ メイン -->
   <main>
     <div class="video-wrapper">
+      <!-- ✅ 丸いロゴと再生バー -->
       <div class="circle-container">
         <div class="circle" data-index="0" id="circle0">
           <div class="inner-circle">
@@ -164,15 +178,17 @@
         </div>
       </div>
 
+      <!-- ✅ 動画 -->
       <video id="video0" src="23011-332483109_small.mp4" playsinline></video>
       <video id="video1" src="366-136082094_small.mp4" playsinline></video>
       <video id="video2" src="52847-473336264_small.mp4" playsinline></video>
-    </div>
 
-    <!-- ✅ 予約ボタン -->
-    <a href="reserve.html" class="reserve-button">予約する</a>
+      <!-- ✅ 映像内の予約ボタン -->
+      <a href="reserve.html" class="reserve-button">予約する</a>
+    </div>
   </main>
 
+  <!-- ✅ JavaScript -->
   <script>
     const videos = [
       document.getElementById('video0'),
