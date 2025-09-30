@@ -27,14 +27,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.5rem;
-      font-weight: bold;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 20;
       user-select: none;
+    }
+
+    header img {
+      height: 40px;
+      object-fit: contain;
     }
 
     main {
@@ -115,7 +118,6 @@
       user-select: none;
     }
 
-    /* ✅ 予約ボタン */
     .reserve-button {
       margin-top: 20px;
       padding: 12px 30px;
@@ -136,8 +138,9 @@
 </head>
 <body>
 
+  <!-- ✅ ヘッダーにロゴ画像 -->
   <header>
-    旅館 橘
+    <img src="ryokantatibanakarilogo.png" alt="旅館 橘ロゴ" />
   </header>
 
   <main>
@@ -165,7 +168,7 @@
       <video id="video2" src="52847-473336264_small.mp4" playsinline></video>
     </div>
 
-    <!-- ✅ 予約するボタン -->
+    <!-- ✅ 予約ボタン -->
     <a href="reserve.html" class="reserve-button">予約する</a>
   </main>
 
