@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Rotation</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .circle-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+      gap: 60px;
+    }
+
+    .circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #444;
+      position: relative;
+    }
+
+    .progress-bar {
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      height: 5px;
+      background: lime;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    video {
+      max-width: 640px;
+      height: auto;
+      display: none;
+      border-radius: 12px;
+    }
+
+    video.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="circle-container">
+    <div class="circle" id="circle0"><div class="progress-bar" id="bar0"></div></div>
+    <div class="circle" id="circle1"><div class="progress-bar" id="bar1"></div></div>
+    <div class="circle" id="circle2"><div class="progress-bar" id="bar2"></div></div>
+  </div>
+
+  <video id="video0" src="23011-332483109_small.mp4"></video>
+  <video id="video1" src="366-136082094_small.mp4"></video>
+  <video id="video2" src="52847-473336264_small.mp4"></video>
+
+  <script>
+    const videos = [
+      document.getElementById('video0'),
+      document.getElementById('video1'),
+      document.getElementById('video2')
+    ];
+
+    const bars = [
+      document.getElementById('bar0'),
+      document.getElementById('bar1'),
+      document.getElementById('bar2')
+    ];
+
+    let currentIndex = 0;
+
+    function playVideo(index) {
+      // 全て非表示
+      videos.forEach((v, i) => {
+        v.classList.remove('active');
+        v.pause();
+        v.currentTime = 0;
+        bars[i].style.width = '0%';
+      });
+
+      // 現在の動画を表示
+      const currentVideo = videos[index];
+      const currentBar = bars[index];
+      currentVideo.classList.add('active');
+      currentVideo.play();
+
+      // 再生バー更新ループ
+      const interval = setInterval(() => {
+        const percent = (currentVideo.currentTime / currentVideo.duration) * 100;
+        currentBar.style.width = percent + '%';
+      }, 100);
+
+      currentVideo.onended = () => {
+        clearInterval(interval);
+        currentBar.style.width = '0%';
+
+        // 次のインデックス（ループ順は 0 → 1 → 2 → 1 → 2 → 1...）
+        if (currentIndex === 0) {
+          currentIndex = 1;
+        } else if (currentIndex === 1) {
+          currentIndex = 2;
+        } else {
+          currentIndex = 1;
+        }
+
+        playVideo(currentIndex);
+      };
+    }
+
+    // 初期再生
+    playVideo(currentIndex);
+  </script>
+</body>
+</html>
