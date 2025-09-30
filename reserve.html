@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>旅館 橘 - ご予約</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- ファビコン -->
     <link rel="icon" type="image/png" href="ryokantatibanasitelogo.png">
 
@@ -13,22 +13,36 @@
             font-family: "Helvetica", "Arial", sans-serif;
             background-color: #f8f4f0;
             color: #333;
-            padding: 20px;
-            line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
 
-        header {
+        /* ===== ヘッダーエリア ===== */
+        .site-header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px 0;
             text-align: center;
-            padding: 10px;
+        }
+
+        .site-header img {
+            height: 60px;
+            cursor: pointer;
+        }
+
+        /* ===== メインコンテンツ ===== */
+        main {
+            padding: 20px;
         }
 
         h1 {
             color: #a85c32;
+            text-align: center;
         }
 
         form {
             max-width: 600px;
-            margin: auto;
+            margin: 0 auto;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
@@ -65,49 +79,57 @@
 </head>
 <body>
 
-<header>
-    <h1>旅館 橘 - ご予約フォーム</h1>
-    <p>ようこそ。下記のフォームよりご予約をお願いいたします。</p>
-</header>
+    <!-- ===== ヘッダー ===== -->
+    <header class="site-header">
+        <a href="index.html">
+            <img src="ryokantatibanakarilogo.png" alt="旅館 橘 ロゴ">
+        </a>
+    </header>
 
-<form action="/reserve" method="post">
-    <label for="name">お名前</label>
-    <input type="text" id="name" name="name" required>
+    <!-- ===== メインコンテンツ ===== -->
+    <main>
+        <h1>旅館 橘 - ご予約フォーム</h1>
+        <p style="text-align:center;">ようこそ。下記のフォームよりご予約をお願いいたします。</p>
 
-    <label for="email">メールアドレス</label>
-    <input type="email" id="email" name="email" required>
+        <form action="/reserve" method="post">
+            <label for="name">お名前</label>
+            <input type="text" id="name" name="name" required>
 
-    <label for="phone">電話番号</label>
-    <input type="tel" id="phone" name="phone" required>
+            <label for="email">メールアドレス</label>
+            <input type="email" id="email" name="email" required>
 
-    <label for="checkin">チェックイン日</label>
-    <input type="date" id="checkin" name="checkin" required>
+            <label for="phone">電話番号</label>
+            <input type="tel" id="phone" name="phone" required>
 
-    <label for="checkout">チェックアウト日</label>
-    <input type="date" id="checkout" name="checkout" required>
+            <label for="checkin">チェックイン日</label>
+            <input type="date" id="checkin" name="checkin" required>
 
-    <label for="guests">宿泊人数</label>
-    <select id="guests" name="guests" required>
-        <option value="">選択してください</option>
-        <option value="1">1人</option>
-        <option value="2">2人</option>
-        <option value="3">3人</option>
-        <option value="4">4人以上</option>
-    </select>
+            <label for="checkout">チェックアウト日</label>
+            <input type="date" id="checkout" name="checkout" required>
 
-    <label for="room">部屋タイプ</label>
-    <select id="room" name="room" required>
-        <option value="">選択してください</option>
-        <option value="和室">和室</option>
-        <option value="洋室">洋室</option>
-        <option value="特別室">特別室</option>
-    </select>
+            <label for="guests">宿泊人数</label>
+            <select id="guests" name="guests" required>
+                <option value="">選択してください</option>
+                <option value="1">1人</option>
+                <option value="2">2人</option>
+                <option value="3">3人</option>
+                <option value="4">4人以上</option>
+            </select>
 
-    <label for="requests">ご要望・ご質問</label>
-    <textarea id="requests" name="requests" rows="4" placeholder="アレルギーや特別なご要望があればご記入ください"></textarea>
+            <label for="room">部屋タイプ</label>
+            <select id="room" name="room" required>
+                <option value="">選択してください</option>
+                <option value="和室">和室</option>
+                <option value="洋室">洋室</option>
+                <option value="特別室">特別室</option>
+            </select>
 
-    <button type="submit">予約する</button>
-</form>
+            <label for="requests">ご要望・ご質問</label>
+            <textarea id="requests" name="requests" rows="4" placeholder="アレルギーや特別なご要望があればご記入ください"></textarea>
+
+            <button type="submit">予約する</button>
+        </form>
+    </main>
 
 </body>
 </html>
