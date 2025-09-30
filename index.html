@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>映像を画面上に表示（スマホ縦画面）</title>
+  <title>旅館 橘公式HP</title>
   <style>
     html, body {
       margin: 0;
@@ -12,16 +12,39 @@
       height: 100%;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center; /* デフォルトは中央 */
+      flex-direction: column;
       color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* スマホ縦画面は映像を上に表示 */
+    header {
+      height: 60px;
+      background-color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      user-select: none;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 60px;
+    }
+
     @media (max-width: 768px) and (orientation: portrait) {
-      html, body {
-        align-items: flex-start; /* 縦方向上寄せ */
-        padding-top: 0;
+      main {
+        align-items: flex-start;
+        padding-top: 60px;
       }
     }
 
@@ -30,7 +53,7 @@
       width: 95vw;
       max-width: 1400px;
       aspect-ratio: 16 / 9;
-      margin-top: 0; /* 余白なし */
+      margin-top: 0;
     }
 
     video {
@@ -90,29 +113,35 @@
 </head>
 <body>
 
-  <div class="video-wrapper">
-    <div class="circle-container">
-      <div class="circle" data-index="0" id="circle0">
-        <div class="inner-circle">
-          <img src="video1logo.png" alt="映像1ロゴ" />
-        </div>
-      </div>
-      <div class="circle" data-index="1" id="circle1">
-        <div class="inner-circle">
-          <img src="video2logo.png" alt="映像2ロゴ" />
-        </div>
-      </div>
-      <div class="circle" data-index="2" id="circle2">
-        <div class="inner-circle">
-          <img src="video3logo.png" alt="映像3ロゴ" />
-        </div>
-      </div>
-    </div>
+  <header>
+    旅館 橘
+  </header>
 
-    <video id="video0" src="23011-332483109_small.mp4" playsinline></video>
-    <video id="video1" src="366-136082094_small.mp4" playsinline></video>
-    <video id="video2" src="52847-473336264_small.mp4" playsinline></video>
-  </div>
+  <main>
+    <div class="video-wrapper">
+      <div class="circle-container">
+        <div class="circle" data-index="0" id="circle0">
+          <div class="inner-circle">
+            <img src="video1logo.png" alt="映像1ロゴ" />
+          </div>
+        </div>
+        <div class="circle" data-index="1" id="circle1">
+          <div class="inner-circle">
+            <img src="video2logo.png" alt="映像2ロゴ" />
+          </div>
+        </div>
+        <div class="circle" data-index="2" id="circle2">
+          <div class="inner-circle">
+            <img src="video3logo.png" alt="映像3ロゴ" />
+          </div>
+        </div>
+      </div>
+
+      <video id="video0" src="23011-332483109_small.mp4" playsinline></video>
+      <video id="video1" src="366-136082094_small.mp4" playsinline></video>
+      <video id="video2" src="52847-473336264_small.mp4" playsinline></video>
+    </div>
+  </main>
 
   <script>
     const videos = [
