@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>丸い再生バー付き映像切替（大きめ表示）</title>
+  <title>丸い再生バー付き映像切替（画像丸＆影なし）</title>
   <style>
     body {
       margin: 0;
@@ -54,11 +54,11 @@
       align-items: center;
       border-radius: 50%;
       background: conic-gradient(#555 0deg, #555 360deg);
-      transition: box-shadow 0.3s ease;
+      transition: none; /* 影なし */
     }
 
     .circle.active {
-      box-shadow: 0 0 10px 3px red;
+      /* 影なしなのでスタイルなし */
     }
 
     /* 内側の映像丸 */
@@ -69,11 +69,18 @@
       background-color: #444;
       position: relative;
       z-index: 2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
       user-select: none;
-      font-size: 14px;
+    }
+
+    /* 丸内の画像 */
+    .inner-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      user-select: none;
     }
   </style>
 </head>
@@ -83,13 +90,19 @@
     <!-- 丸と再生バー -->
     <div class="circle-container">
       <div class="circle" data-index="0" id="circle0">
-        <div class="inner-circle">映像1</div>
+        <div class="inner-circle">
+          <img src="video1logo.png" alt="映像1ロゴ" />
+        </div>
       </div>
       <div class="circle" data-index="1" id="circle1">
-        <div class="inner-circle">映像2</div>
+        <div class="inner-circle">
+          <img src="video2logo.png" alt="映像2ロゴ" />
+        </div>
       </div>
       <div class="circle" data-index="2" id="circle2">
-        <div class="inner-circle">映像3</div>
+        <div class="inner-circle">
+          <img src="video3logo.png" alt="映像3ロゴ" />
+        </div>
       </div>
     </div>
 
