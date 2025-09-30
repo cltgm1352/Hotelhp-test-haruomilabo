@@ -3,16 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>丸い再生バー付き映像切替（画像丸＆影なし）</title>
+  <title>丸い再生バー付き映像切替（スマホ縦画面は上寄せ）</title>
   <style>
     body {
       margin: 0;
       background: #111;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: center; /* PC・横画面は中央 */
       height: 100vh;
       color: white;
+    }
+
+    /* スマホ縦画面時に映像上寄せ */
+    @media (max-width: 768px) and (orientation: portrait) {
+      body {
+        align-items: flex-start; /* 上寄せ */
+        padding-top: 10px;       /* 上余白 */
+      }
     }
 
     .video-wrapper {
@@ -55,10 +63,6 @@
       border-radius: 50%;
       background: conic-gradient(#555 0deg, #555 360deg);
       transition: none; /* 影なし */
-    }
-
-    .circle.active {
-      /* 影なしなのでスタイルなし */
     }
 
     /* 内側の映像丸 */
@@ -191,3 +195,4 @@
   </script>
 </body>
 </html>
+
