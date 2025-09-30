@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Video Rotation</title>
+  <title>Video Sequence</title>
   <style>
     body {
       margin: 0;
@@ -13,16 +13,34 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      flex-direction: column;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 90vw;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      display: none;
+    }
+
+    video.active {
+      display: block;
     }
 
     .circle-container {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-      position: relative;
-      gap: 60px;
+      gap: 50px;
+      z-index: 10;
     }
 
     .circle {
@@ -31,41 +49,43 @@
       border-radius: 50%;
       background-color: #444;
       position: relative;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .progress-bar {
       position: absolute;
-      bottom: -10px;
+      bottom: -6px;
       left: 0;
-      height: 5px;
+      height: 4px;
       background: lime;
       width: 0%;
       transition: width 0.1s linear;
+      border-radius: 2px;
     }
 
-    video {
-      max-width: 640px;
-      height: auto;
-      display: none;
-      border-radius: 12px;
-    }
-
-    video.active {
-      display: block;
+    .circle.active {
+      outline: 2px solid white;
     }
   </style>
 </head>
 <body>
 
-  <div class="circle-container">
-    <div class="circle" id="circle0"><div class="progress-bar" id="bar0"></div></div>
-    <div class="circle" id="circle1"><div class="progress-bar" id="bar1"></div></div>
-    <div class="circle" id="circle2"><div class="progress-bar" id="bar2"></div></div>
-  </div>
+  <div class="video-wrapper">
+    <!-- 丸と再生バー -->
+    <div class="circle-container">
+      <div class="circle" data-index="0"><div class="progress-bar" id="bar0"></div></div>
+      <div class="circle" data-index="1"><div class="progress-bar" id="bar1"></div></div>
+      <div class="circle" data-index="2"><div class="progress-bar" id="bar2"></div></div>
+    </div>
 
-  <video id="video0" src="23011-332483109_small.mp4"></video>
-  <video id="video1" src="366-136082094_small.mp4"></video>
-  <video id="video2" src="52847-473336264_small.mp4"></video>
+    <!-- 映像 -->
+    <video id="video0" src="23011-332483109_small.mp4"></video>
+    <video id="video1" src="366-136082094_small.mp4"></video>
+    <video id="video2" src="52847-473336264_small.mp4"></video>
+  </div>
 
   <script>
     const videos = [
@@ -80,48 +100,56 @@
       document.getElementById('bar2')
     ];
 
+    const circles = document.querySelectorAll('.circle');
+
     let currentIndex = 0;
+    let intervalId = null;
 
     function playVideo(index) {
-      // 全て非表示
+      // すべてリセット
       videos.forEach((v, i) => {
         v.classList.remove('active');
         v.pause();
         v.currentTime = 0;
         bars[i].style.width = '0%';
+        circles[i].classList.remove('active');
       });
 
-      // 現在の動画を表示
-      const currentVideo = videos[index];
-      const currentBar = bars[index];
-      currentVideo.classList.add('active');
-      currentVideo.play();
+      const video = videos[index];
+      const bar = bars[index];
 
-      // 再生バー更新ループ
-      const interval = setInterval(() => {
-        const percent = (currentVideo.currentTime / currentVideo.duration) * 100;
-        currentBar.style.width = percent + '%';
+      video.classList.add('active');
+      circles[index].classList.add('active');
+      video.play();
+
+      // 再生バー更新
+      intervalId && clearInterval(intervalId);
+      intervalId = setInterval(() => {
+        const percent = (video.currentTime / video.duration) * 100;
+        bar.style.width = percent + '%';
       }, 100);
 
-      currentVideo.onended = () => {
-        clearInterval(interval);
-        currentBar.style.width = '0%';
-
-        // 次のインデックス（ループ順は 0 → 1 → 2 → 1 → 2 → 1...）
-        if (currentIndex === 0) {
-          currentIndex = 1;
-        } else if (currentIndex === 1) {
-          currentIndex = 2;
-        } else {
-          currentIndex = 1;
-        }
-
+      video.onended = () => {
+        clearInterval(intervalId);
+        bar.style.width = '0%';
+        // 次の映像インデックス（0→1→2→0…）
+        currentIndex = (index + 1) % videos.length;
         playVideo(currentIndex);
       };
     }
+
+    // 丸をクリックしたらその映像に切り替え
+    circles.forEach(circle => {
+      circle.addEventListener('click', () => {
+        const index = parseInt(circle.getAttribute('data-index'));
+        currentIndex = index;
+        playVideo(index);
+      });
+    });
 
     // 初期再生
     playVideo(currentIndex);
   </script>
 </body>
 </html>
+
